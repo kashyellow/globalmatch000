@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ENCUENTRO Global</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{font-family:'Inter',system-ui,-apple-system,sans-serif}
+  @keyframes wallIn{0%{transform:translateY(-12px) scale(.98);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+  .wall-in{animation:wallIn .55s cubic-bezier(.16,1,.3,1)}
+</style>
+</head>
+<body class="min-h-screen bg-[#0A0A0F] text-white antialiased selection:bg-[#FF7E9C]/30">
+  <!-- ambient glows -->
+  <div class="pointer-events-none fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-[#0A0A0F]"></div>
+    <div class="absolute -top-[30%] left-1/2 -translate-x-1/2 w-[120%] h-[70%] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(255,126,156,0.12),transparent_60%)]"></div>
+    <div class="absolute -top-[20%] right-[10%] w-[60%] h-[50%] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(126,217,197,0.10),transparent_60%)]"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="relative z-20 w-full max-w-[1280px] mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 rounded-full bg-white flex items-center justify-center text-[12px] font-black text-black">E</div>
+      <span class="text-[15px] font-semibold tracking-tight">ENCUENTRO <span class="font-normal opacity-70">Global</span></span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-[13px] text-white/50">
+      <span>Destinations</span><span>How it Works</span><span>Wall</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pt-6 md:pt-10 pb-16 md:pb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+      <div class="max-w-[620px]">
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08] backdrop-blur-md text-[11px] tracking-[0.14em] font-medium text-white/70 uppercase">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
+          LIVE IN 42 DESTINATIONS
+        </div>
+        <h1 class="mt-7 text-[42px] md:text-[68px] leading-[0.92] tracking-[-0.03em] font-semibold">
+          <span class="text-white font-bold">ENCUENTRO</span>
+          <span class="bg-gradient-to-r from-[#FF7E9C] via-[#FF8FAE] to-[#7ED9C5] bg-clip-text text-transparent font-medium"> Global</span>
+        </h1>
+        <p class="mt-6 text-[15.5px] md:text-[17px] leading-[1.6] text-white/55 max-w-[460px]">
+          Meet travelers heading to the same destination. No swiping fatigue — just real people, same flight path, new stories.
+        </p>
+        <div class="mt-8 flex items-center gap-3">
+          <button class="h-[44px] px-6 rounded-full bg-white text-black text-[14px] font-semibold tracking-tight hover:bg-white/90 transition flex items-center gap-1.5">Enter App <span>→</span></button>
+          <button class="h-[44px] px-6 rounded-full bg-white/[0.08] border border-white/[0.10] text-white text-[14px] font-medium hover:bg-white/[0.12] transition">How it Works</button>
+        </div>
+        <div class="mt-10 flex items-center gap-3.5">
+          <div class="flex -space-x-2">
+            <img src="https://i.pravatar.cc/100?img=32" class="w-8 h-8 rounded-full border-[2.5px] border-[#0A0A0F]"/>
+            <img src="https://i.pravatar.cc/100?img=26" class="w-8 h-8 rounded-full border-[2.5px] border-[#0A0A0F]"/>
+            <img src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full border-[2.5px] border-[#0A0A0F]"/>
+          </div>
+          <p class="text-[12.5px] leading-[1.4] text-white/40"><span class="text-white/80 font-medium">2,431 travelers</span> matched this month across 12 hubs</p>
+        </div>
+      </div>
+      <!-- Right mockup -->
+      <div class="relative lg:pl-6">
+        <div class="relative mx-auto w-full max-w-[380px] rounded-[28px] bg-[#12121A] border border-white/[0.08] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
+          <div class="rounded-[20px] overflow-hidden bg-[#0A0A0F] relative aspect-[9/12]">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-80"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+              <div class="rounded-[14px] bg-white p-3 shadow-xl">
+                <div class="flex items-start gap-2.5">
+                  <img src="https://i.pravatar.cc/100?img=5" class="w-8 h-8 rounded-full"/>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-1.5"><span class="text-[13px] font-semibold text-black">Sofia</span><span class="text-[10px] px-1.5 py-0.5 rounded-full bg-[#E8F5E9] text-[#2E7D32]">Verified</span></div>
+                    <p class="text-[11px] text-black/60 leading-[1.4] mt-1">Solo traveler • Yoga teacher • Chasing sunsets and good coffee. Heading to Ubud for a month to reset.</p>
+                    <div class="mt-2.5 flex gap-2">
+                      <div class="flex-1 h-7 rounded-full bg-black text-white text-[11px] font-medium flex items-center justify-center gap-1">♡ Like</div>
+                      <div class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-[11px]">×</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="absolute top-3 left-3 right-3 flex justify-between">
+              <div class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur text-[10px] tracking-wide text-white/70 border border-white/10">BLUR-TO-REVEAL ON</div>
+              <div class="px-2 py-1 rounded-full bg-[#7ED9C5] text-[9px] font-bold tracking-wide text-black">VERIFIED</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WALL SECTION -->
+  <section id="wall" class="relative z-10 bg-[#0F172A] border-t border-white/[0.06]">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-14 md:py-20">
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-[28px] md:text-[36px] font-semibold tracking-[-0.02em] leading-none">Encuentro Wall</h2>
+          <div class="mt-3 h-[3px] w-[88px] rounded-full bg-[#FF6B6B] shadow-[0_0_12px_rgba(255,107,107,0.6)]"></div>
+        </div>
+        <div id="wallCount" class="text-[12.5px] tracking-wide text-slate-400 font-medium">Recent • 3 Messages</div>
+      </div>
+
+      <div class="mt-10 grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 items-start">
+        <!-- Form -->
+        <div class="rounded-[20px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.3)] p-6 md:p-7">
+          <div class="flex items-center gap-2 mb-5">
+            <div class="w-6 h-6 rounded-full bg-[#0F172A] flex items-center justify-center"><span class="w-1.5 h-1.5 rounded-full bg-[#FF6B6B]"></span></div>
+            <span class="text-[12px] tracking-[0.14em] font-semibold text-slate-800 uppercase">Post to Wall</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[11px] font-semibold tracking-wide text-slate-500 uppercase mb-1.5">Name</label><input id="nameInput" placeholder="Your name" class="w-full h-[42px] px-3.5 rounded-[12px] bg-slate-50 border border-slate-200 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]/30 focus:border-[#FF6B6B]/40"/></div>
+            <div><label class="block text-[11px] font-semibold tracking-wide text-slate-500 uppercase mb-1.5">Location</label><input id="locInput" value="DR" placeholder="DR" class="w-full h-[42px] px-3.5 rounded-[12px] bg-slate-50 border border-slate-200 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]/30 focus:border-[#FF6B6B]/40"/></div>
+          </div>
+          <div class="mt-4">
+            <label class="block text-[11px] font-semibold tracking-wide text-slate-500 uppercase mb-1.5">Message</label>
+            <textarea id="msgInput" rows="4" placeholder="Share your encuentro, travel tip, or shoutout..." class="w-full px-3.5 py-3 rounded-[12px] bg-slate-50 border border-slate-200 text-[14px] leading-[1.5] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]/30 focus:border-[#FF6B6B]/40 resize-none"></textarea>
+            <div id="charCount" class="mt-2 text-[11px] text-slate-400">0/240</div>
+          </div>
+          <button id="postBtn" class="mt-5 w-full h-[44px] rounded-[12px] bg-[#FF6B6B] text-white text-[14px] font-semibold tracking-tight flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(255,107,107,0.35)] hover:bg-[#FF5A5A] transition">Post to Wall</button>
+          <p class="mt-4 text-[11px] leading-[1.5] text-slate-400 text-center">Visible to all travelers heading to Encuentro. Be respectful.</p>
+        </div>
+
+        <!-- Feed -->
+        <div id="feed" class="space-y-3.5"></div>
+      </div>
+
+      <div class="mt-16 flex justify-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08] backdrop-blur text-[11px] tracking-[0.12em] font-medium text-white/50">ENCUENTRO Global • Encuentro, Sosua DR</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="relative z-10 bg-[#0A0A0F] py-8 border-t border-white/[0.04]">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between text-[11px] text-white/30"><span>© 2025 ENCUENTRO Global</span><span class="hidden md:block">Built for travelers who actually meet.</span></div>
+  </footer>
+
+<script>
+const initial = [
+  {id:1,name:'Maya',location:'Medellin → DR',time:'2h ago',text:'Arriving in Sosua Friday! Looking for coffee spots and coworking recs. Anyone want to link for a morning work session near Encuentro?',initial:'M'},
+  {id:2,name:'James',location:'Boston → DR',time:'5h ago',text:'Flight lands Thursday night. First time in DR — would love to meet other remote folks heading to the north coast. LFG!',initial:'J'},
+  {id:3,name:'Carlos',location:'Sosua • DR',time:'1d ago',text:'Hosting a sunset surf check at Encuentro beach tomorrow 5pm. All travelers welcome — just show up. Bring board or just vibes.',initial:'C'},
+];
+let messages = JSON.parse(localStorage.getItem('encuentro_wall') || 'null') || initial;
+const feed = document.getElementById('feed');
+const countEl = document.getElementById('wallCount');
+const nameInput = document.getElementById('nameInput');
+const locInput = document.getElementById('locInput');
+const msgInput = document.getElementById('msgInput');
+const charCount = document.getElementById('charCount');
+const postBtn = document.getElementById('postBtn');
+
+function render(){
+  feed.innerHTML='';
+  countEl.textContent = `Recent • ${messages.length} Messages`;
+  messages.forEach(m=>{
+    const div = document.createElement('div');
+    div.className = `rounded-[16px] bg-white border border-slate-100 shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-5 ${m.just?'wall-in ring-1 ring-[#FF6B6B]/20':''}`;
+    div.innerHTML = `
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-full bg-[#0F172A] flex items-center justify-center text-white text-[13px] font-bold shrink-0">${m.initial}</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span class="text-[14px] font-semibold text-slate-900">${m.name}</span>
+            <span class="inline-flex items-center gap-1 text-[12px] text-slate-500">📍 ${m.location}</span>
+            <span class="text-[11px] text-slate-400">• ${m.time}</span>
+          </div>
+          <p class="mt-2.5 text-[14px] leading-[1.6] text-slate-700">${m.text.replace(/</g,'&lt;')}</p>
+        </div>
+      </div>`;
+    feed.appendChild(div);
+  });
+  localStorage.setItem('encuentro_wall', JSON.stringify(messages));
+}
+render();
+
+msgInput.addEventListener('input',()=>{charCount.textContent=`${msgInput.value.length}/240`;});
+
+postBtn.addEventListener('click',()=>{
+  const name = nameInput.value.trim();
+  const loc = locInput.value.trim() || 'DR';
+  const text = msgInput.value.trim();
+  if(!name || !text) { alert('Add name and message'); return; }
+  const newMsg = {id:Date.now(),name,location:loc,time:'now',text,initial:name[0].toUpperCase(),just:true};
+  messages.unshift(newMsg);
+  msgInput.value=''; charCount.textContent='0/240';
+  render();
+  setTimeout(()=>{ newMsg.just=false; render(); },800);
+  window.scrollTo({top:document.getElementById('wall').offsetTop,behavior:'smooth'});
+});
+</script>
+
+<!-- Traveler Wall Add-on -->
+<script src="wall_addon.js"></script>
+
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
