@@ -1,91 +1,63 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-
-type Post = {
-  id: string
-  text: string
-  image: string | null
-  createdAt: number
-}
-
 export default function Page() {
-  const [text, setText] = useState('')
-  const [preview, setPreview] = useState<string | null>(null)
-  const [posts, setPosts] = useState<Post[]>([])
-
-  useEffect(() => {
-    const saved = localStorage.getItem('global_posts')
-    if (saved) setPosts(JSON.parse(saved))
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('global_posts', JSON.stringify(posts))
-  }, [posts])
-
-  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = () => setPreview(reader.result as string)
-    reader.readAsDataURL(file)
-  }
-
-  const daysLeft = (createdAt: number) => {
-    const diff = Date.now() - createdAt
-    const days = 7 - Math.floor(diff / (24 * 60 * 60 * 1000))
-    return Math.max(0, days)
-  }
-
-  const handlePost = () => {
-    if (!text.trim() &&!preview) return
-    const newPost: Post = {
-      id: Date.now().toString(),
-      text,
-      image: preview,
-      createdAt: Date.now(),
-    }
-    setPosts([newPost,...posts])
-    setText('')
-    setPreview(null)
-  }
-
-  const visiblePosts = posts.filter(p => daysLeft(p.createdAt) > 0)
-
   return (
-    <main style={{ minHeight: '100vh', background: '#09090b', color: '#fff', padding: 24 }}>
-      <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <h1 style={{ fontSize: 42, fontWeight: 800 }}>Global</h1>
-        <div style={{ color: '#4ade80', fontSize: 14, marginBottom: 24 }}>Global 🌍 ON</div>
+    <main style={{fontFamily:'ui-sans-system,-apple-system,BlinkMacSystemFont,Inter,sans-serif',background:'#0a0a0a',color:'#fafafa',minHeight:'100vh',lineHeight:1.6}}>
+      <style>{`
+        .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+        nav{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222;position:sticky;top:0;background:rgba(10,10,10,.8);backdrop-filter:blur(12px);z-index:10}
+        .logo{font-weight:700;display:flex;gap:8px;align-items:center}
+        .logo i{width:28px;height:28px;background:#fff;color:#000;display:grid;place-items:center;border-radius:8px;font-style:normal;font-weight:900}
+        .btn{padding:10px 18px;border-radius:999px;border:1px solid #222;background:#fafafa;color:#000;font-weight:600;font-size:14px;cursor:pointer}
+        .btn-ghost{background:transparent;color:#fafafa}
+        .hero{padding:100px 0 60px;text-align:center}
+        .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border:1px solid #222;border-radius:999px;font-size:12px;color:#a1a1aa;margin-bottom:24px;background:#121212}
+        .badge span{width:6px;height:6px;background:#22c55e;border-radius:50%}
+        h1{font-size:clamp(36px,7vw,72px);line-height:.95;letter-spacing:-.04em;font-weight:800;max-width:800px;margin:0 auto 20px}
+        h1 em{font-style:normal;background:linear-gradient(180deg,#fff,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .sub{font-size:19px;color:#a1a1aa;max-width:560px;margin:0 auto 32px}
+        .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:80px 0}
+        .card{background:#121212;border:1px solid #222;border-radius:16px;padding:24px;text-align:left}
+        .card h3{font-size:15px;margin-bottom:8px}
+        .card p{font-size:14px;color:#a1a1aa}
+        .deploy{background:#fff;color:#000;border-radius:20px;padding:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin:20px 0 80px}
+        footer{border-top:1px solid #222;padding:32px 0;color:#a1a1aa;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap}
+        @media(max-width:800px){.grid{grid-template-columns:1fr}.hero{padding:60px 0 40px}}
+      `}</style>
 
-        <div style={{ background: '#18181b', borderRadius: 12, padding: 16, marginBottom: 24 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600 }}>Create post</h2>
-          <p style={{ color: '#a1a1aa', fontSize: 14, marginBottom: 12 }}>What's happening?</p>
-          <textarea
-            value={text}
-            onChange={e => setText(e.target.value)}
-            placeholder="What's happening?"
-            style={{ width: '100%', minHeight: 100, background: '#27272a', color: 'white', borderRadius: 8, padding: 12, border: 'none' }}
-          />
-          <input type="file" accept="image/*" onChange={onFile} style={{ marginTop: 12 }} />
-          {preview && (
-            <div style={{ position: 'relative', marginTop: 12 }}>
-              <img src={preview} style={{ width: '100%', borderRadius: 8 }} alt="preview" />
-              <button onClick={() => setPreview(null)} style={{ position: 'absolute', top: 8, right: 8, background: '#000', color: '#fff', borderRadius: 20, padding: '4px 8px' }}>X</button>
-            </div>
-          )}
-          <button onClick={handlePost} style={{ width: '100%', marginTop: 12, background: 'white', color: 'black', padding: '12px', borderRadius: 8, fontWeight: 700 }}>Post</button>
-        </div>
+      <div className="wrap">
+        <nav>
+          <div className="logo"><i>S</i> Site</div>
+          <a className="btn btn-ghost" href="mailto:hello@example.com">Contact</a>
+        </nav>
 
-        {visiblePosts.map(post => (
-          <div key={post.id} style={{ background: '#18181b', borderRadius: 12, padding: 16, marginBottom: 16 }}>
-            <p style={{ whiteSpace: 'pre-wrap' }}>{post.text}</p>
-            {post.image && <img src={post.image} style={{ width: '100%', borderRadius: 8, marginTop: 12 }} alt="post" />}
-            <div style={{ marginTop: 12, color: '#a1a1aa', fontSize: 12, display: 'flex', justifyContent: 'space-between' }}>
-              <span>{daysLeft(post.createdAt)} days left</span>
-              <button onClick={() => setPosts(posts.filter(p => p.id!== post.id))} style={{ background: 'transparent', color: '#a1a1aa', border: 'none' }}>Delete</button>
-            </div>
+        <section className="hero">
+          <div className="badge"><span></span> Deployed on Vercel • Zero config</div>
+          <h1>Your site is <em>live</em> in one file.</h1>
+          <p className="sub">You are editing <code>app/page.tsx</code> — this is your homepage. Save this file and Vercel will auto-deploy.</p>
+          <div className="cta">
+            <a className="btn" href="#features">Get Started</a>
+            <a className="btn btn-ghost" href="https://vercel.com">Vercel →</a>
           </div>
-        ))}
+
+          <div id="features" className="grid">
+            <div className="card"><div>⚡</div><h3>Instant Deploy</h3><p>Push to main branch and Vercel redeploys automatically.</p></div>
+            <div className="card"><div>🎨</div><h3>Fully Editable</h3><p>All code is in this one file. Change text, colors, sections.</p></div>
+            <div className="card"><div>🔒</div><h3>ZDR Ready</h3><p>Static UI, no data collection. Works with your ZDR settings.</p></div>
+          </div>
+
+          <div className="deploy">
+            <div>
+              <strong>How it works</strong><br/>
+              <span style={{opacity:.7,fontSize:'14px'}}>Edit app/page.tsx → Commit → Live in 30s</span>
+            </div>
+            <code style={{background:'#000',color:'#fff',padding:'8px 12px',borderRadius:'8px'}}>git push</code>
+          </div>
+        </section>
+
+        <footer>
+          <div>© {new Date().getFullYear()} Your Brand</div>
+          <div>Edit this in app/page.tsx</div>
+        </footer>
       </div>
     </main>
   )
