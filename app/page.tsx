@@ -1,64 +1,133 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabase = supabaseUrl && supabaseAnonKey? createClient(supabaseUrl, supabaseAnonKey) : null
+
+type Profile = {
+  id: string
+  username?: string
+  full_name?: string
+  age?: number
+  city?: string
+  bio?: string
+  avatar_url?: string
+}
+
+const MOCK: Profile[] = [
+  { id: '1', full_name: 'Sofia', age: 26, city: 'Madrid', bio: 'Love travel & coffee', avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400' },
+  { id: '2', full_name: 'Marcus', age: 28, city: 'London', bio: 'Gym, music, adventure', avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400' },
+  { id: '3', full_name: 'Aisha', age: 25, city: 'Dubai', bio: 'Designer | Dreamer', avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400' },
+]
+
 export default function Page() {
+  const [profiles, setProfiles] = useState<Profile[]>([])
+  const [loading, setLoading] = useState(true)
+  const [liked, setLiked] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    async function load() {
+      if (!supabase) {
+        setProfiles(MOCK)
+        setLoading(false)
+        return
+      }
+      const { data, error } = await supabase.from('profiles').select('*').limit(12)
+      if (error ||!data?.length) {
+        setProfiles(MOCK)
+      } else {
+        setProfiles(data as Profile[])
+      }
+      setLoading(false)
+    }
+    load()
+  }, [])
+
+  const toggleLike = async (id: string) => {
+    const isLiked = liked.has(id)
+    const next = new Set(liked)
+    if (isLiked) next.delete(id)
+    else next.add(id)
+    setLiked(next)
+
+    if (supabase) {
+      try {
+        if (!isLiked) await supabase.from('likes').insert({ liked_user_id: id })
+        else await supabase.from('likes').delete().eq('liked_user_id', id)
+      } catch {}
+    }
+  }
+
   return (
-    <main style={{fontFamily:'ui-sans-system,-apple-system,BlinkMacSystemFont,Inter,sans-serif',background:'#0a0a0a',color:'#fafafa',minHeight:'100vh',lineHeight:1.6}}>
-      <style>{`
-        .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-        nav{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222;position:sticky;top:0;background:rgba(10,10,10,.8);backdrop-filter:blur(12px);z-index:10}
-        .logo{font-weight:700;display:flex;gap:8px;align-items:center}
-        .logo i{width:28px;height:28px;background:#fff;color:#000;display:grid;place-items:center;border-radius:8px;font-style:normal;font-weight:900}
-        .btn{padding:10px 18px;border-radius:999px;border:1px solid #222;background:#fafafa;color:#000;font-weight:600;font-size:14px;cursor:pointer}
-        .btn-ghost{background:transparent;color:#fafafa}
-        .hero{padding:100px 0 60px;text-align:center}
-        .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border:1px solid #222;border-radius:999px;font-size:12px;color:#a1a1aa;margin-bottom:24px;background:#121212}
-        .badge span{width:6px;height:6px;background:#22c55e;border-radius:50%}
-        h1{font-size:clamp(36px,7vw,72px);line-height:.95;letter-spacing:-.04em;font-weight:800;max-width:800px;margin:0 auto 20px}
-        h1 em{font-style:normal;background:linear-gradient(180deg,#fff,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .sub{font-size:19px;color:#a1a1aa;max-width:560px;margin:0 auto 32px}
-        .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:80px 0}
-        .card{background:#121212;border:1px solid #222;border-radius:16px;padding:24px;text-align:left}
-        .card h3{font-size:15px;margin-bottom:8px}
-        .card p{font-size:14px;color:#a1a1aa}
-        .deploy{background:#fff;color:#000;border-radius:20px;padding:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin:20px 0 80px}
-        footer{border-top:1px solid #222;padding:32px 0;color:#a1a1aa;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap}
-        @media(max-width:800px){.grid{grid-template-columns:1fr}.hero{padding:60px 0 40px}}
-      `}</style>
+    <div className="min-h-screen bg-black text-white">
+      <header className="flex justify-between items-center px-6 py-4 border-b border-zinc-800">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-black">S</div>
+          <span className="font-semibold">GlobalMatch</span>
+        </div>
+        <button className="px-4 py-2 rounded-full border border-zinc-700 text-sm">Contact</button>
+      </header>
 
-      <div className="wrap">
-        <nav>
-          <div className="logo"><i>S</i> Site</div>
-          <a className="btn btn-ghost" href="mailto:hello@example.com">Contact</a>
-        </nav>
+      {!supabase && (
+        <div className="mx-6 mt-4 p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-200 text-sm">
+          Supabase keys not set in Vercel. Go to Vercel &gt; Settings &gt; Environment Variables and add
+          <code className="mx-1">NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, then Redeploy. Showing demo data for now.
+        </div>
+      )}
 
-        <section className="hero">
-          <div className="badge"><span></span> Deployed on Vercel • Zero config</div>
-          <h1>Your site is <em>live</em> in one file.</h1>
-          <p className="sub">You are editing <code>app/page.tsx</code> — this is your homepage. Save this file and Vercel will auto-deploy.</p>
-          <div className="cta">
-            <a className="btn" href="#features">Get Started</a>
-            <a className="btn btn-ghost" href="https://vercel.com">Vercel →</a>
+      <main className="px-6 py-12 max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-400 mb-6">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Deployed on Vercel • Live now
           </div>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
+            Your site is <span className="text-zinc-500">live</span> for real.
+          </h1>
+          <p className="text-zinc-400 max-w-2xl mx-auto">
+            This is your homepage from <code>app/page.tsx</code>. Profiles come from Supabase when env vars are set.
+          </p>
+        </div>
 
-          <div id="features" className="grid">
-            <div className="card"><div>⚡</div><h3>Instant Deploy</h3><p>Push to main branch and Vercel redeploys automatically.</p></div>
-            <div className="card"><div>🎨</div><h3>Fully Editable</h3><p>All code is in this one file. Change text, colors, sections.</p></div>
-            <div className="card"><div>🔒</div><h3>ZDR Ready</h3><p>Static UI, no data collection. Works with your ZDR settings.</p></div>
+        {loading? (
+          <div className="text-center py-20 text-zinc-500">Loading profiles...</div>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-6">
+            {profiles.map(p => (
+              <div key={p.id} className="rounded-2xl bg-zinc-900 border border-zinc-800 overflow-hidden">
+                <img src={p.avatar_url || MOCK[0].avatar_url} alt={p.full_name} className="w-full h-64 object-cover" />
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-semibold text-lg">{p.full_name || p.username} {p.age? `• ${p.age}` : ''}</h3>
+                      <p className="text-xs text-zinc-500">{p.city || 'Global'}</p>
+                    </div>
+                    <button
+                      onClick={() => toggleLike(p.id)}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center transition ${liked.has(p.id)? 'bg-white text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'}`}
+                    >
+                      ♥
+                    </button>
+                  </div>
+                  <p className="text-sm text-zinc-400 line-clamp-2">{p.bio || 'New here 👋'}</p>
+                </div>
+              </div>
+            ))}
           </div>
+        )}
 
-          <div className="deploy">
-            <div>
-              <strong>How it works</strong><br/>
-              <span style={{opacity:.7,fontSize:'14px'}}>Edit app/page.tsx → Commit → Live in 30s</span>
-            </div>
-            <code style={{background:'#000',color:'#fff',padding:'8px 12px',borderRadius:'8px'}}>git push</code>
+        <div className="mt-16 grid md:grid-cols-2 gap-4">
+          <div className="rounded-2xl bg-zinc-900 border border-zinc-800 p-6">
+            <h4 className="font-semibold mb-2">⚡ Instant Deploy</h4>
+            <p className="text-sm text-zinc-400">Push to main branch and Vercel redeploys automatically. No config needed.</p>
           </div>
-        </section>
-
-        <footer>
-          <div>© {new Date().getFullYear()} Your Brand</div>
-          <div>Edit this in app/page.tsx</div>
-        </footer>
-      </div>
-    </main>
+          <div className="rounded-2xl bg-zinc-900 border border-zinc-800 p-6">
+            <h4 className="font-semibold mb-2">🔒 Supabase Connected</h4>
+            <p className="text-sm text-zinc-400">Using tables: profiles, likes, matches, messages + Avatars bucket.</p>
+          </div>
+        </div>
+      </main>
+    </div>
   )
 }
