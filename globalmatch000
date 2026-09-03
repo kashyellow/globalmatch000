@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Global Wall</title>
+<style>
+  body{margin:0;background:#000;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+ .wrap{max-width:720px;margin:0 auto;padding:16px}
+  h1{font-size:22px;margin:8px 0 16px}
+ .card{background:#111;border:1px solid #222;border-radius:12px;padding:16px;margin-bottom:16px}
+  label{display:block;font-size:13px;color:#aaa;margin:8px 0 4px}
+  input,textarea,select,button{width:100%;padding:12px;border-radius:8px;border:1px solid #333;background:#000;color:#fff;font-size:16px;box-sizing:border-box}
+  input[type="file"]{padding:8px}
+  textarea{min-height:90px;resize:vertical}
+  button{background:#fff;color:#000;font-weight:600;border:0;margin-top:12px}
+  button:disabled{opacity:.5}
+ .row{display:flex;gap:12px}
+ .row>*{flex:1}
+ .post{border-top:1px solid #222;padding:12px 0}
+ .post:first-child{border-top:0}
+ .meta{font-size:12px;color:#888;margin-bottom:6px}
+  img{max-width:100%;border-radius:8px;margin-top:8px}
+ .empty{color:#666;text-align:center;padding:32px 0}
+ .filename{font-size:12px;color:#0f0;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Global Wall</h1>
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Name</label>
+        <input id="name" placeholder="Your name"/>
+      </div>
+      <div>
+        <label>Country</label>
+        <select id="country">
+          <option>United States</option><option>Canada</option><option>Mexico</option>
+          <option>United Kingdom</option><option>Germany</option><option>France</option>
+          <option>India</option><option>Japan</option><option>Brazil</option><option>Australia</option>
+        </select>
+      </div>
+    </div>
+    <label>Message</label>
+    <textarea id="message" placeholder="Share something..."></textarea>
+    <label>Photo (optional)</label>
+    <input id="photo" type="file" accept="image/*"/>
+    <div id="fname" class="filename"></div>
+    <button id="postBtn">Post to Wall</button>
+  </div>
+  <div id="wall" class="card">
+    <div class="empty">No posts yet. Be the first.</div>
+  </div>
+</div>
+<script>
+const nameEl=document.getElementById('name');
+const countryEl=document.getElementById('country');
+const msgEl=document.getElementById('message');
+const photoEl=document.getElementById('photo');
+const fnameEl=document.getElementById('fname');
+const postBtn=document.getElementById('postBtn');
+const wallEl=document.getElementById('wall');
+let posts=JSON.parse(localStorage.getItem('globalwall')||'[]');
+
+function render(){
+  if(!posts.length){wallEl.innerHTML='<div class="empty">No posts yet. Be the first.</div>';return}
+  wallEl.innerHTML=posts.map(p=>`
+    <div class="post">
+      <div class="meta">${p.name||'Anonymous'} • ${p.country} • ${new Date(p.time).toLocaleString()}</div>
+      <div>${p.message||''}</div>
+      ${p.img?`<img src="${p.img}"/>`:''}
+    </div>
+  `).join('');
+}
+render();
+
+photoEl.onchange=()=>{
+  fnameEl.textContent=photoEl.files[0]?photoEl.files[0].name:'';
+};
+
+postBtn.onclick=async()=>{
+  const name=nameEl.value.trim();
+  const country=countryEl.value;
+  const message=msgEl.value.trim();
+  if(!message &&!photoEl.files[0]){alert('Add a message or photo');return}
+  postBtn.disabled=true;postBtn.textContent='Posting...';
+  let img='';
+  if(photoEl.files[0]){
+    img=await new Promise(r=>{
+      const fr=new FileReader();
+      fr.onload=()=>r(fr.result);
+      fr.readAsDataURL(photoEl.files[0]);
+    });
+  }
+  posts.unshift({name,country,message,img,time:Date.now()});
+  posts=posts.slice(0,100);
+  localStorage.setItem('globalwall',JSON.stringify(posts));
+  nameEl.value='';msgEl.value='';photoEl.value='';fnameEl.textContent='';
+  postBtn.disabled=false;postBtn.textContent='Post to Wall';
+  render();
+};
+
+// Clear posts older than 7 days
+const week=7*24*60*60*1000;
+posts=posts.filter(p=>Date.now()-p.time<week);
+localStorage.setItem('globalwall',JSON.stringify(posts));
+</script>
+</body>
+</html>
