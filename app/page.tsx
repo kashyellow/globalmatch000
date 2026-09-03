@@ -59,7 +59,7 @@ export default function Home() {
     const diff = Date.now() - createdAt
     const days = 7 - Math.floor(diff / (24 * 60 * 60 * 1000))
     return Math.max(0, days)
-  }
+  
 
   return (
     <main style={{ minHeight: '100vh', background: '#000', color: '#fff', padding: '24px', fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif' }}>
